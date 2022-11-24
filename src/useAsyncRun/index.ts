@@ -4,7 +4,7 @@ import { ref } from 'vue'
 export default function useAsyncRun<T, M>(errorHandler: ErrorHandler) {
     const loading = ref(false)
 
-    async function run(func: (params?: T) => Promise<M>, step: string, params?: T) {
+    async function run(func: (params?: T) => Promise<M>, step?: string, params?: T) {
         try {
             loading.value = true;
             const result = await func(params)
@@ -16,7 +16,7 @@ export default function useAsyncRun<T, M>(errorHandler: ErrorHandler) {
         }
     }
 
-    function layzRun(func: (params?: T) => Promise<M>, step: string){
+    function layzRun(func: (params?: T) => Promise<M>, step?: string){
         return function(params?:T){
             return run(func,step,params)
         }

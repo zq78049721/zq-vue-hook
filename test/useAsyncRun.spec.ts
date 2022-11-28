@@ -29,7 +29,7 @@ test('useAsyncRun', async () => {
             square: value * value
         }
     }
-    let asyncWarp:any=null
+    let asyncWarp:any=null;
     mount({
         setup() {
             const { loading, run, layzRun } = useAsyncRun<IRequestParams, IResponse>(handler)

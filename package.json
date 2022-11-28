@@ -16,7 +16,7 @@
     "vue"
   ],
   "author": "zhuqing",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zq78049721/zq-vue-form-core/issues"
   },

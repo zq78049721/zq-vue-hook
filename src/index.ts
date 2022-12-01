@@ -1,5 +1,7 @@
-import run from './useAsyncRun/index'
+import useAsyncRun from './useAsyncRun/index'
 
 export {
-    run
+    useAsyncRun
 }
+
+export default {useAsyncRun}

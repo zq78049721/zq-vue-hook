@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "outDir": "dist",
         "target": "esnext", // 编译目标
         "module": "esnext", // 模块类型
         "moduleResolution": "node",
@@ -12,5 +13,11 @@
         "removeComments": false, // 删除注释
         "declaration": true, // 生成定义文件
         "declarationMap": false, // 生成定义sourceMap
-    }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

@@ -1,6 +1,9 @@
 # zq-vue-hook
 一些vue3通用的组合式函数
 
+### 安装
+npm install zq-vue-hook
+
 ### useAsyncRun
 
 该函数接受一个异步方法，返回 loading、run、layzRun 3个属性，其中run和layzRun可以接受一个异步函数进行执行，执行过程中会根据实际情况切换loading.value属性，如果在执行过程中报错则会运行errorHandler函数

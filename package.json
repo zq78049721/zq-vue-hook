@@ -1,8 +1,9 @@
 {
   "name": "zq-vue-hook",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "easy create form page",
   "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "test": "jest"
@@ -17,8 +18,7 @@
     "vue"
   ],
   "files": [
-    "./dist/*.js",
-    "./dist/*.ts"
+    "dist/**/*.*"
   ],
   "author": "zhuqing",
   "license": "MIT",

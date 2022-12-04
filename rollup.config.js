@@ -27,31 +27,15 @@ export default [{
     input: './src/index.ts',
     output: [{
         file: './dist/index.js',
-        format: 'cjs',
+        format: 'umd',
+        name:'zqVueHook',
         sourcemap: true
     }, {
         file: './dist/index.min.js',
         plugins: [terser()],
-        format: 'cjs',
+        format: 'umd',
+        name:'zqVueHook',
     }],
-    external: ['vue'],
-    plugins: [
-        tsPlugin,
-        nodeResolve({
-            extensions,
-        }),
-        // resolve(),
-        babel({
-            exclude: resolve('./node_modules/**') // 只编译我们的源代码
-        }),
-        // terser()
-    ],
-},{
-    input: './src/index.ts',
-    output:{
-        file: './dist/index.ts',
-        format: 'esm',
-    },
     external: ['vue'],
     plugins: [
         tsPlugin,

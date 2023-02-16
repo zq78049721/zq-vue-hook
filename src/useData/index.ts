@@ -1,96 +1,84 @@
 import useAsyncRun from '../useAsyncRun/index'
 import { ErrorHandler } from '../useAsyncRun/types'
-import { ISort, IUseDataParams, IRequestParams } from './types'
-import { ref, Ref } from 'vue'
+import { IUseDataParams, IOptions } from './types'
+import { ref, Ref, computed, watch } from 'vue'
 
-function selectWithoutEmpty(value1: any, value2: any) {
-    if (value1 === undefined || value1 === null) {
-        return value2
-    } else {
-        return value1
+function defaultOptions() {
+    return {
+        mode: 'default',
+        supportPager: true,
     }
 }
 
-export default function useData<T>(params: IUseDataParams<T>, errorHandler: ErrorHandler) {
-    const { loading, layzRun } = useAsyncRun<any,void>(errorHandler)
-    const isPager = params.pager
-    const pager = ref(params.pager || { page: 1, pageSize: -1 })
+
+export default function useData<T>(params: IUseDataParams<T>, errorHandler: ErrorHandler, options?: IOptions) {
+    const { loading, layzRun } = useAsyncRun<any, void>(errorHandler)
+    const _options = {
+        ...defaultOptions(),
+        ...options
+    }
+
+    const pageSize = ref(params.pageSize || 30)
+    const page = ref(params.page || 1)
+
     const sorts = ref(params.sorts || [])
-    const items: Ref<T[]> = ref([])
-    const total = ref(0)
+    const _items: Ref<T[]> = ref([])
+    const _total = ref(0)
 
-
-    const getReqeustPagerParams = (props: IRequestParams) => {
-        if (isPager) {
-            return {
-                page: selectWithoutEmpty(props.page, pager.value.page),
-                pageSize: selectWithoutEmpty(props.pageSize, pager.value.pageSize)
-            }
-        } else {
-            return
+    const pager = computed(() => {
+        if (!_options.supportPager) { return }
+        return {
+            page: page.value,
+            pageSize: pageSize.value
         }
-    }
+    })
 
-    const request = async (props: IRequestParams) => {
-        const _pager = getReqeustPagerParams(props)
-        const _sorts = selectWithoutEmpty(props.sorts, sorts.value)
-        const rst = await params.getData(_pager, _sorts)
-        if (_pager) {
-            if (pager.value.page !== _pager.page) {
-                pager.value.page = _pager.page
-            }
-            if (pager.value.pageSize !== _pager.pageSize) {
-                pager.value.pageSize = _pager.pageSize
-            }
+    const items = computed(() => _items.value)
+    const total = computed(() => _total.value)
+
+    let promise:Promise<void> |null =null
+    let reslove:any=null
+
+    const wait = () => {
+        if (!promise) {
+            promise = new Promise(r => {
+                reslove=r
+            })
         }
-        if (sorts.value !== _sorts) {
-            sorts.value = _sorts
-        }
-        total.value = rst.total
-        items.value = rst.items
+        return promise;
     }
 
-    const onSearch=(page:number=1)=>{
-        return request({
-            page
-        })
+    const done=()=>{
+        promise=null
+        reslove()
+        reslove=null
     }
 
-    const onPageChange=(page:number)=>{
-        if(!isPager){
-            throw new Error('未开启分页查询功能!')
-        }
-        return request({
-            page
-        })
+    watch([pageSize, page, sorts], async () => {
+        onSearch()
+    })
+
+    const _search = async () => {
+        const rst =await params.getData({ pager: pager.value, sorts: sorts.value })
+        _items.value = rst?.items || []
+        _total.value = rst?.total || 0
     }
 
-    const onPageSizeChange=(pageSize:number)=>{
-        if(!isPager){
-            throw new Error('未开启分页查询功能!')
-        }
-        return request({
-            pageSize,
-            page:1
-        })
-    }
+    const layzSearch=layzRun(_search,'onSearch')
 
-    const onOrder=(sorts:ISort[])=>{
-        return request({
-            sorts
-        })
-    }
-
+    const onSearch=layzRun(async ()=>{
+        await layzSearch()
+        done()
+    },'onSearch')
 
     return {
         loading,
         items,
         total,
-        pager,
+        page,
+        pageSize,
         sorts,
-        onSearch:layzRun(onSearch,"onSearch") as (page?:number)=>Promise<void>,
-        onPageChange:layzRun(onPageChange,"onPageChange") as (page:number)=>Promise<void>,
-        onPageSizeChange:layzRun(onPageSizeChange,"onPageSizeChange") as (pageSize:number)=>Promise<void>,
-        onOrder:layzRun(onOrder,"onOrder") as (sorts:ISort[])=>Promise<void>
+        wait,
+        onSearch
     }
 }

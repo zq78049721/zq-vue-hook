@@ -14,15 +14,26 @@ export interface IListResult<T>{
 }
 
 export interface IUseDataParams<T>{
-    pager?:IPager,
+    pageSize?:number,
+    page?:number,
     sorts?:ISort[],
     getData:IGetData<T>
 }
 
-export type IGetData<T>=(pager?: IPager, sorts?: ISort[]) => Promise<IListResult<T>>
+export interface IGetDataParams{
+    pager?:IPager,
+    sorts?:ISort[]
+}
+
+export type IGetData<T>=(params?:IGetDataParams) => Promise<IListResult<T>>
 
 export interface IRequestParams{
     pageSize?:number,
     page?:number,
     sorts?:ISort[]
+}
+
+export interface IOptions{
+    mode?:string,
+    supportPager?:boolean
 }

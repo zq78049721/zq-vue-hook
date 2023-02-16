@@ -1,18 +1,20 @@
 import { ErrorHandler } from './types'
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 
 export default function useAsyncRun<T, M>(errorHandler: ErrorHandler) {
-    const loading = ref(false)
+    const _loading = ref(false)
+
+    const loading=computed(()=>_loading.value)
 
     async function run(func: (params?: T) => Promise<M>, step?: string, params?: T) {
         try {
-            loading.value = true;
+            _loading.value = true;
             const result = await func(params)
             return result
         } catch (error: any) {
             errorHandler(error, step)
         } finally {
-            loading.value = false
+            _loading.value = false
         }
     }
 

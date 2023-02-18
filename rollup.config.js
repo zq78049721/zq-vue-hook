@@ -28,13 +28,19 @@ export default [{
     output: [{
         file: './dist/index.js',
         format: 'umd',
-        name:'zqVueHook',
-        sourcemap: true
+        name:'ZqVueHook',
+        sourcemap: true,
+        globals:{
+            vue:'Vue'
+        }
     }, {
         file: './dist/index.min.js',
         plugins: [terser()],
         format: 'umd',
-        name:'zqVueHook',
+        name:'ZqVueHook',
+        globals:{
+            vue:'Vue'
+        }
     }],
     external: ['vue'],
     plugins: [

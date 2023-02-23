@@ -20,10 +20,44 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
 
     const pageSize = ref(params.pageSize || 30)
     const page = ref(params.page || 1)
-
     const sorts = ref(params.sorts || [])
     const _items: Ref<T[]> = ref([])
     const _total = ref(0)
+    const pageCount=computed(()=>{
+        let count:number=_total.value/pageSize.value;
+        if(_total.value%pageSize.value!=0){
+            count++
+        }
+        return parseInt(count+"")
+    })
+    const isFirstPage=computed(()=>page.value===1)
+    const isLastPage=computed(()=>page.value===pageCount.value)
+
+    const onFirst=()=>{
+        if(!isFirstPage.value){
+            page.value=1
+        }
+    }
+
+    const onLast=()=>{
+        if(!isLastPage.value){
+            page.value=pageCount.value
+        }
+    }
+
+    const onNext=()=>{
+        !isLastPage.value && page.value++
+    }
+
+    const onPre=()=>{
+        !isFirstPage.value && page.value--
+    }
+
+    const onSkipPage=(newPage:number)=>{
+        if(1<page.value && pageCount.value>page.value){
+            page.value=newPage
+        }
+    }
 
     const pager = computed(() => {
         if (!_options.supportPager) { return }
@@ -49,9 +83,11 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
     }
 
     const done=()=>{
-        promise=null
-        reslove()
-        reslove=null
+        if(promise){
+            promise=null
+            reslove()
+            reslove=null
+        }
     }
 
     watch([pageSize, page, sorts], async () => {
@@ -66,10 +102,10 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
 
     const layzSearch=layzRun(_search,'onSearch')
 
-    const onSearch=layzRun(async ()=>{
+    const onSearch=async ()=>{
         await layzSearch()
         done()
-    },'onSearch')
+    }
 
     return {
         loading,
@@ -78,7 +114,15 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
         page,
         pageSize,
         sorts,
+        pageCount,
+        isFirstPage,
+        isLastPage,
         wait,
+        onPre,
+        onNext,
+        onSkipPage,
+        onFirst,
+        onLast,
         onSearch
     }
 }

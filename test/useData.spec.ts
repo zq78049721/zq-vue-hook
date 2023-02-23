@@ -52,13 +52,22 @@ test('useData', async () => {
                 page,
                 pageSize,
                 sorts,
-                onSearch,
-                wait
+                pageCount,
+                isFirstPage,
+                isLastPage,
+                wait,
+                onPre,
+                onNext,
+                onSkipPage,
+                onFirst,
+                onLast,
+                onSearch
             } = useData<number>({
                 page: 1,
                 pageSize: 5,
                 sorts: defaultSorts,
                 getData: (params?: IGetDataParams) => {
+                    expect(loading.value).toBe(true);
                     if (!params?.pager) {
                         throw new Error('没有分页参数!')
                     }
@@ -81,6 +90,10 @@ test('useData', async () => {
                 expect(total.value).toBe(51);
                 expect(page.value).toBe(1);
                 expect(pageSize.value).toBe(5);
+                expect(pageCount.value).toBe(11);
+                expect(isFirstPage.value).toBe(true);
+                expect(isLastPage.value).toBe(false);
+
 
                 page.value=3
                 await wait()
@@ -89,10 +102,16 @@ test('useData', async () => {
                 expect(total.value).toBe(51);
                 expect(page.value).toBe(3);
                 expect(pageSize.value).toBe(5);
-                page.value=5
-                await wait()
-                expect(items.value).toEqual([30,31,32,33,34]);
+                expect(isFirstPage.value).toBe(false);
+                expect(isLastPage.value).toBe(false);
 
+                page.value=11
+                await wait()
+                expect(items.value).toEqual([60]);
+                expect(isFirstPage.value).toBe(false);
+                expect(isLastPage.value).toBe(true);
+
+                page.value=5
                 pageSize.value=10
                 await wait()
                 expect(loading.value).toBe(false);
@@ -100,6 +119,57 @@ test('useData', async () => {
                 expect(total.value).toBe(51);
                 expect(page.value).toBe(5);
                 expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+
+                onPre()
+                await wait()
+                expect(loading.value).toBe(false);
+                expect(items.value).toEqual([40,41,42,43,44,45,46,47,48,49]);
+                expect(total.value).toBe(51);
+                expect(page.value).toBe(4);
+                expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+
+                onNext()
+                await wait()
+                expect(loading.value).toBe(false);
+                expect(items.value).toEqual([50,51,52,53,54,55,56,57,58,59]);
+                expect(total.value).toBe(51);
+                expect(page.value).toBe(5);
+                expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+
+                onSkipPage(3)
+                await wait()
+                expect(loading.value).toBe(false);
+                expect(items.value).toEqual([30,31,32,33,34,35,36,37,38,39]);
+                expect(total.value).toBe(51);
+                expect(page.value).toBe(3);
+                expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+
+                onFirst()
+                await wait()
+                expect(loading.value).toBe(false);
+                expect(items.value).toEqual([10,11,12,13,14,15,16,17,18,19]);
+                expect(total.value).toBe(51);
+                expect(page.value).toBe(1);
+                expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+                expect(isFirstPage.value).toBe(true);
+                expect(isLastPage.value).toBe(false);
+
+                onLast()
+                await wait()
+                expect(loading.value).toBe(false);
+                expect(items.value).toEqual([60]);
+                expect(total.value).toBe(51);
+                expect(page.value).toBe(6);
+                expect(pageSize.value).toBe(10);
+                expect(pageCount.value).toBe(6);
+                expect(isFirstPage.value).toBe(false);
+                expect(isLastPage.value).toBe(true);
+
 
                 sorts.value=updatedSorts
                 await wait()

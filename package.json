@@ -1,6 +1,6 @@
 {
   "name": "zq-vue-hook",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "easy create form page",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

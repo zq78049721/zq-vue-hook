@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>zq-vue-hook</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    .mr15 {
+      margin-right: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/zq-vue-hook@1.0.7/dist/index.js"></script>
+  <div id="app"></div>
+  <script>
+    const vueComponents = {}
+    const example1 = {
+  setup() {
+    const {
+      useAsyncRun
+    } = ZqVueHook;
+    const {
+      ref
+    } = Vue;
+    const sleep = delay => {
+      return new Promise(reslove => {
+        setTimeout(reslove, delay);
+      });
+    };
+    const request = async params => {
+      await sleep(2000);
+      if (params && params.throwError) {
+        throw new Error('运行的时候出错!');
+      }
+      const value = params ? params.value : 0;
+      return value * value;
+    };
+
+    // const { ref } = Vue
+    const result = ref('?');
+    // const { useAsyncRun } = ZqVueHook
+    const {
+      loading,
+      run
+    } = useAsyncRun(error => {
+      alert(error.message);
+    });
+    const onClick = async () => {
+      result.value = await run(request, 'calculating', {
+        value: 9,
+        throwError: true
+      });
+    };
+    return {
+      loading,
+      result,
+      onClick
+    };
+  },
+  template: "\r\n  <div id=\"run\">\r\n    <div><span>9*9=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+};
+ vueComponents.example1=example1;
+
+const sleep = delay => {
+  return new Promise(reslove => {
+    setTimeout(reslove, delay);
+  });
+};
+async function request(params) {
+  await sleep(2000);
+  const value = params ? params.value : 0;
+  return value * value;
+}
+const example2 = {
+  setup() {
+    const {
+      useAsyncRun
+    } = ZqVueHook;
+    const {
+      ref
+    } = Vue;
+    const result = ref('?');
+    const {
+      loading,
+      layzRun
+    } = useAsyncRun(() => {});
+    const warpRun = layzRun(request, 'calculating');
+    const onClick = async () => {
+      result.value = await warpRun({
+        value: 5
+      });
+    };
+    return {
+      loading,
+      result,
+      onClick
+    };
+  },
+  template: "\r\n  <div id=\"run\">\r\n    <div><span>5*5=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+};
+ vueComponents.example2=example2;
+
+const example3 = {
+  setup() {
+    const {
+      useAsyncRun
+    } = ZqVueHook;
+    const {
+      ref
+    } = Vue;
+    const sleep = delay => {
+      return new Promise(reslove => {
+        setTimeout(reslove, delay);
+      });
+    };
+    const request = async params => {
+      await sleep(2000);
+      if (params && params.throwError) {
+        throw new Error(errorMessage);
+      }
+      const value = params ? params.value : 0;
+      return value * value;
+    };
+
+    // const { ref } = Vue
+    const result = ref('?');
+    // const { useAsyncRun } = ZqVueHook
+    const {
+      loading,
+      run
+    } = useAsyncRun(() => {});
+    const onClick = async () => {
+      result.value = await run(request, 'calculating', {
+        value: 3
+      });
+    };
+    return {
+      loading,
+      result,
+      onClick
+    };
+  },
+  template: "\r\n  <div id=\"run\">\r\n    <div><span>3*3=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+};
+ vueComponents.example3=example3;
+
+const example4 = {
+  setup() {
+    const {
+      useData
+    } = ZqVueHook;
+    const {
+      computed
+    } = Vue;
+    const sleep = delay => {
+      return new Promise(reslove => {
+        setTimeout(reslove, delay);
+      });
+    };
+    const allItems = [...new Array(96)].map((value, index) => {
+      return index + 1;
+    });
+    const handler = (error, step) => {
+      //...
+    };
+    const request = async (range, pager, sorts) => {
+      await sleep(2000);
+      const [min, max] = range;
+      const order = sorts && sorts.length ? sorts[0].order : 'asc';
+      const start = (pager.page - 1) * pager.pageSize;
+      const end = pager.page * pager.pageSize;
+      const totalItems = allItems.filter(item => item >= min && item <= max);
+      if (order === 'desc') {
+        totalItems.reverse();
+      }
+      const total = totalItems.length;
+      const result = totalItems.filter((value, index) => {
+        return start <= index && index < end;
+      });
+      return {
+        items: result,
+        total
+      };
+    };
+    const {
+      loading,
+      items,
+      total,
+      page,
+      pageSize,
+      sorts,
+      pageCount,
+      isFirstPage,
+      isLastPage,
+      onPre,
+      onNext,
+      onSkipPage,
+      onFirst,
+      onLast,
+      onSearch
+    } = useData({
+      page: 1,
+      pageSize: 5,
+      sorts: [],
+      getData: async ({
+        pager,
+        sorts
+      }) => {
+        if (!pager) {
+          throw new Error('没有分页参数!');
+        }
+        return await request([10, 50], pager, sorts);
+      }
+    }, handler);
+    onSearch();
+    const currentOrder = computed(() => {
+      if (!sorts.value || !sorts.value.length) {
+        return 'asc';
+      }
+      return sorts.value[0].order;
+    });
+    const changeSort = () => {
+      const order = currentOrder.value === 'asc' ? 'desc' : 'asc';
+      sorts.value = [{
+        name: 'number',
+        order
+      }];
+    };
+    console.log(page);
+    return {
+      loading,
+      items,
+      total,
+      page,
+      sorts,
+      pageSize,
+      pageCount,
+      isFirstPage,
+      isLastPage,
+      onPre,
+      onNext,
+      onSkipPage,
+      onFirst,
+      onLast,
+      changeSort
+    };
+  },
+  template: "\r\n  <div v-if=\"loading\">\u67E5\u8BE2\u4E2D...\r\n  </div>\r\n  <ul v-if=\"!loading\">\r\n    <li v-for=\"item in items\">{{ item }}</li>\r\n    <div>\r\n      <span class=\"mr15\">\u5F53\u524D\u9875\u9762:{{ `${page}/${pageCount}` }}</span>\r\n      <span class=\"mr15\">\u6BCF\u9875\u884C\u6570:{{ pageSize }}</span>\r\n      <span>\u603B\u67E5\u8BE2\u6570\u636E\u91CF:{{ total }}</span>\r\n    </div>\r\n    <div>\r\n      <button class=\"mr15\" @click=\"onFirst\" :disabled=\"isFirstPage\">\u7B2C\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onPre\" :disabled=\"isFirstPage\">\u4E0A\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onSkipPage(3)\">\u8DF3\u8F6C\u5230\u7B2C\u4E09\u9875</button>\r\n      <button class=\"mr15\" @click=\"onNext\" :disabled=\"isLastPage\">\u4E0B\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onLast\" :disabled=\"isLastPage\">\u6700\u4E00\u9875</button>\r\n\r\n      <button class=\"mr15\" @click=\"pageSize = 10\" :disabled=\"isLastPage\" v-if=\"pageSize === 5\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A10\u884C</button>\r\n      <button class=\"mr15\" @click=\"pageSize = 5\" :disabled=\"isLastPage\" v-if=\"pageSize === 10\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A5\u884C</button>\r\n\r\n      <button @click=\"changeSort\">\u53CD\u8F6C</button>\r\n    </div>\r\n  </ul>\r\n"
+};
+ vueComponents.example4=example4;
+
+    window.$docsify = {
+      name: 'zq-vue-hook',
+      repo: 'https://github.com/zq78049721/zq-vue-hook',
+      loadSidebar: false,
+      vueComponents,
+      // auto2top: true,
+      // coverpage: true
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+</body>
+
+</html>

@@ -54,7 +54,7 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
     }
 
     const onSkipPage=(newPage:number)=>{
-        if(1<page.value && pageCount.value>page.value){
+        if(1<newPage && pageCount.value>newPage){
             page.value=newPage
         }
     }

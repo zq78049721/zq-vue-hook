@@ -6,9 +6,9 @@ import fs from 'fs-extra'
 
 const __filename = dirname(fileURLToPath(import.meta.url))
 
-const sourceDocsPaths = path.resolve(__filename, '../docs')
+const sourceDocsPaths = path.resolve(__filename, '../docs_template')
 
-const targetDocsPath = path.resolve(__filename, '../document')
+const targetDocsPath = path.resolve(__filename, '../docs')
 
 function getFiles(filePath, list) {
   const dirs = fs.readdirSync(filePath)

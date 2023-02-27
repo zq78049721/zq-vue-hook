@@ -11,7 +11,7 @@ export default function (exampleFiles) {
   exampleFiles.forEach(file => {
     const { path, processed, name } = file
     const { template, script, exampleName } = processed
-    const targetPath = path.replace('docs', 'document')//.replace('.vue', '.md');
+    const targetPath = path.replace('docs_template', 'docs')//.replace('.vue', '.md');
     io.remove(targetPath)
     const content = exampleTemplateCode
       .replace('{name}', name)

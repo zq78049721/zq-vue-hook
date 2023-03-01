@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1677594155125" clover="3.2.0">
-  <project timestamp="1677594155125" name="All files">
-    <metrics statements="83" coveredstatements="83" conditionals="26" coveredconditionals="20" methods="30" coveredmethods="30" elements="139" coveredelements="133" complexity="0" loc="83" ncloc="83" packages="4" files="4" classes="4"/>
+<coverage generated="1677676924664" clover="3.2.0">
+  <project timestamp="1677676924664" name="All files">
+    <metrics statements="84" coveredstatements="84" conditionals="27" coveredconditionals="21" methods="30" coveredmethods="30" elements="141" coveredelements="135" complexity="0" loc="84" ncloc="84" packages="4" files="4" classes="4"/>
     <package name="src.useAsyncRun">
       <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
       <file name="index.ts" path="D:\source\zq-vue-hook\src\useAsyncRun\index.ts">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="7" count="26" type="stmt"/>
-        <line num="10" count="13" type="stmt"/>
-        <line num="11" count="13" type="stmt"/>
-        <line num="12" count="13" type="stmt"/>
-        <line num="13" count="12" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="31" type="stmt"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="15" type="stmt"/>
+        <line num="12" count="15" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
-        <line num="17" count="13" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="23" count="11" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
+        <line num="17" count="15" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="13" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.useClasses">
@@ -36,77 +36,78 @@
       </file>
     </package>
     <package name="src.useData">
-      <metrics statements="59" coveredstatements="59" conditionals="23" coveredconditionals="17" methods="19" coveredmethods="19"/>
+      <metrics statements="60" coveredstatements="60" conditionals="24" coveredconditionals="18" methods="19" coveredmethods="19"/>
       <file name="index.ts" path="D:\source\zq-vue-hook\src\useData\index.ts">
-        <metrics statements="59" coveredstatements="59" conditionals="23" coveredconditionals="17" methods="19" coveredmethods="19"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="21" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="33" count="7" type="stmt"/>
-        <line num="34" count="6" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
+        <metrics statements="60" coveredstatements="60" conditionals="24" coveredconditionals="18" methods="19" coveredmethods="19"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="9" type="stmt"/>
+        <line num="34" count="8" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
         <line num="37" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="38" count="1" type="stmt"/>
-        <line num="42" count="1" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
         <line num="43" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="44" count="1" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
         <line num="49" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="52" count="1" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
         <line num="53" count="1" type="cond" truecount="2" falsecount="0"/>
-        <line num="56" count="1" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
         <line num="57" count="1" type="cond" truecount="3" falsecount="0"/>
         <line num="58" count="1" type="stmt"/>
-        <line num="62" count="1" type="stmt"/>
-        <line num="63" count="9" type="cond" truecount="0" falsecount="1"/>
-        <line num="64" count="9" type="stmt"/>
-        <line num="70" count="10" type="stmt"/>
-        <line num="71" count="2" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
-        <line num="74" count="1" type="stmt"/>
-        <line num="76" count="1" type="stmt"/>
-        <line num="77" count="10" type="cond" truecount="1" falsecount="0"/>
-        <line num="78" count="10" type="stmt"/>
-        <line num="79" count="10" type="stmt"/>
-        <line num="82" count="10" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="86" count="10" type="cond" truecount="1" falsecount="0"/>
-        <line num="87" count="10" type="stmt"/>
-        <line num="88" count="10" type="stmt"/>
-        <line num="89" count="10" type="stmt"/>
-        <line num="93" count="1" type="stmt"/>
-        <line num="94" count="9" type="stmt"/>
-        <line num="97" count="1" type="stmt"/>
-        <line num="98" count="10" type="stmt"/>
-        <line num="99" count="10" type="cond" truecount="1" falsecount="1"/>
-        <line num="100" count="10" type="cond" truecount="1" falsecount="1"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="105" count="1" type="stmt"/>
-        <line num="106" count="10" type="stmt"/>
-        <line num="107" count="10" type="stmt"/>
-        <line num="110" count="1" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="11" type="cond" truecount="0" falsecount="1"/>
+        <line num="64" count="11" type="stmt"/>
+        <line num="70" count="13" type="stmt"/>
+        <line num="71" count="4" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="77" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="78" count="12" type="stmt"/>
+        <line num="79" count="12" type="stmt"/>
+        <line num="82" count="12" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="86" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="87" count="12" type="stmt"/>
+        <line num="88" count="12" type="stmt"/>
+        <line num="89" count="12" type="stmt"/>
+        <line num="93" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="9" type="stmt"/>
+        <line num="99" count="2" type="stmt"/>
+        <line num="100" count="12" type="stmt"/>
+        <line num="101" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="102" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="105" count="2" type="stmt"/>
+        <line num="107" count="2" type="stmt"/>
+        <line num="108" count="12" type="stmt"/>
+        <line num="109" count="12" type="stmt"/>
+        <line num="112" count="2" type="stmt"/>
       </file>
     </package>
     <package name="test">
       <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
       <file name="testUtils.ts" path="D:\source\zq-vue-hook\test\testUtils.ts">
         <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
-        <line num="1" count="2" type="cond" truecount="1" falsecount="0"/>
-        <line num="2" count="13" type="stmt"/>
-        <line num="3" count="13" type="stmt"/>
+        <line num="1" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="2" count="16" type="stmt"/>
+        <line num="3" count="16" type="stmt"/>
       </file>
     </package>
   </project>

@@ -23,39 +23,39 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
     const sorts = ref(params.sorts || [])
     const _items: Ref<T[]> = ref([])
     const _total = ref(0)
-    const pageCount=computed(()=>{
-        let count:number=_total.value/pageSize.value;
-        if(_total.value%pageSize.value!=0){
+    const pageCount = computed(() => {
+        let count: number = _total.value / pageSize.value;
+        if (_total.value % pageSize.value != 0) {
             count++
         }
-        return parseInt(count+"")
+        return parseInt(count + "")
     })
-    const isFirstPage=computed(()=>page.value===1)
-    const isLastPage=computed(()=>page.value===pageCount.value)
+    const isFirstPage = computed(() => page.value === 1)
+    const isLastPage = computed(() => page.value === pageCount.value)
 
-    const onFirst=()=>{
-        if(!isFirstPage.value){
-            page.value=1
+    const onFirst = () => {
+        if (!isFirstPage.value) {
+            page.value = 1
         }
     }
 
-    const onLast=()=>{
-        if(!isLastPage.value){
-            page.value=pageCount.value
+    const onLast = () => {
+        if (!isLastPage.value) {
+            page.value = pageCount.value
         }
     }
 
-    const onNext=()=>{
+    const onNext = () => {
         !isLastPage.value && page.value++
     }
 
-    const onPre=()=>{
+    const onPre = () => {
         !isFirstPage.value && page.value--
     }
 
-    const onSkipPage=(newPage:number)=>{
-        if(1<newPage && pageCount.value>newPage){
-            page.value=newPage
+    const onSkipPage = (newPage: number) => {
+        if (1 < newPage && pageCount.value > newPage) {
+            page.value = newPage
         }
     }
 
@@ -70,39 +70,41 @@ export default function useData<T>(params: IUseDataParams<T>, errorHandler: Erro
     const items = computed(() => _items.value)
     const total = computed(() => _total.value)
 
-    let promise:Promise<void> |null =null
-    let reslove:any=null
+    let promise: Promise<void> | null = null
+    let reslove: any = null
 
     const wait = () => {
         if (!promise) {
             promise = new Promise(r => {
-                reslove=r
+                reslove = r
             })
         }
         return promise;
     }
 
-    const done=()=>{
-        if(promise){
-            promise=null
+    const done = () => {
+        if (promise) {
+            promise = null
             reslove()
-            reslove=null
+            reslove = null
         }
     }
 
-    watch([pageSize, page, sorts], async () => {
-        onSearch()
-    })
+    if (options?.mode !== 'call') {
+        watch([pageSize, page, sorts], async () => {
+            onSearch()
+        })
+    }
 
     const _search = async () => {
-        const rst =await params.getData({ pager: pager.value, sorts: sorts.value })
+        const rst = await params.getData({ pager: pager.value, sorts: sorts.value })
         _items.value = rst?.items || []
         _total.value = rst?.total || 0
     }
 
-    const layzSearch=layzRun(_search,'onSearch')
+    const layzSearch = layzRun(_search, 'onSearch')
 
-    const onSearch=async ()=>{
+    const onSearch = async () => {
         await layzSearch()
         done()
     }

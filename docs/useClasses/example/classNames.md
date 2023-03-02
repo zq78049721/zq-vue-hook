@@ -1,11 +1,16 @@
-<template>
+* #### classNames
+
+```html
+
   classNames is {{ classNames }}
   <br />
   <br />
   <input v-model="val" />
-</template>
 
-<script>
+```
+
+```javascript
+
 import { ref } from "vue";
 import { useClasses } from "zq-vue-hook";
 export default {
@@ -22,4 +27,9 @@ export default {
     };
   },
 };
-</script>
+
+```
+
+<output data-lang="output">
+<example4/>
+</output>

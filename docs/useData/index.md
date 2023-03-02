@@ -34,6 +34,10 @@
        ```
 ``errorHandler:(error:any,step?:string)=>void``查询出错时候会调用该方法
 
+``options?: IOptions``
+  * ``mode?: string,``查询模式 'default' 默认模式,'call' 手动模式，需要调用onSearch才可以触发查询,默认值 'default'
+  * ``supportPager?: boolean``是否进行分页查询 默认值 true
+
 ### 返回对象
 
   ``loading:Computed<boolean>``在查询数据的时候loading.value=true 否则loading.value=false
@@ -66,62 +70,6 @@
 
   ``onSearch():Promise<void>``如果有必要的情况下，调用该方法可以手动执行一次数据查询
 
+!> useData 初始化后的第一次查询需要手动调用一次``onSearch``方法
+
 ### 示例
-
-```javascript
-  async function main(){
-      const items=[...new Array(96)].map((value,index)=>{
-          return index+1;
-      })
-
-      async function request(range:number[],pager:IPager,sorts?:ISort[])=>{
-          const [min,max]=range
-          const start=(pager.page-1)*pager.pageSize;
-          const end=pager.page*pager.pageSize
-          const totalItems=items.filter(item=>item>=min && item<=max);
-          const total=totalItems.length;
-          const result= totalItems.filter((value,index)=>{
-              return start<=index && index <end 
-          })
-
-          return {
-              items:result,
-              total
-          }
-      }
-      
-      function handler(error: any, step?: string) {
-          //...
-      }
-
-    const { 
-      loading,
-      items,
-      total,
-      pager,
-      sorts,
-      onSearch,
-      onPageChange,
-      onPageSizeChange,
-      onOrder
-    } = useData<number>({
-      pager:{
-          page:1,
-          pageSize:5
-      },
-      sorts:defaultSorts,
-      getData:(pager?:IPager,sorts?:ISort[])=>{
-          if(!pager){
-              throw new Error('没有分页参数!')
-          }
-          return request([10,50],pager,sorts)
-      }
-  },handler)
-  
-  await onSearch()
-  await onPageChange(3)
-  await onPageSizeChange(10)
-  await onOrder([{name:'...',order:'desc'}])
-  }
-
-```

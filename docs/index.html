@@ -17,7 +17,7 @@
 
 <body>
   <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/zq-vue-hook@1.0.9/dist/index.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/zq-vue-hook@1.1.0/dist/index.js"></script>
   <div id="app"></div>
   <script>
     const vueComponents = {}
@@ -64,7 +64,7 @@
       onClick
     };
   },
-  template: "\r\n  <div id=\"run\">\r\n    <div><span>9*9=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+  template: "\n  <div id=\"run\">\n    <div><span>9*9=</span>{{ loading ? '...' : result }}</div>\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\n  </div>\n"
 };
  vueComponents.example1=example1;
 
@@ -103,7 +103,7 @@ const example2 = {
       onClick
     };
   },
-  template: "\r\n  <div id=\"run\">\r\n    <div><span>5*5=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+  template: "\n  <div id=\"run\">\n    <div><span>5*5=</span>{{ loading ? '...' : result }}</div>\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\n  </div>\n"
 };
  vueComponents.example2=example2;
 
@@ -147,11 +147,34 @@ const example3 = {
       onClick
     };
   },
-  template: "\r\n  <div id=\"run\">\r\n    <div><span>3*3=</span>{{ loading ? '...' : result }}</div>\r\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\r\n  </div>\r\n"
+  template: "\n  <div id=\"run\">\n    <div><span>3*3=</span>{{ loading ? '...' : result }}</div>\n    <button @click=\"onClick()\">\u5F00\u59CB\u8FD0\u7B97</button>\n  </div>\n"
 };
  vueComponents.example3=example3;
 
 const example4 = {
+  setup() {
+    const {
+      useClasses
+    } = ZqVueHook;
+    const {
+      ref
+    } = Vue;
+    const val = ref(0);
+    const classNames = useClasses({
+      isInit: () => /^[0-9]*$/.test(val.value + ""),
+      is20: () => 20,
+      isEven: () => val.value % 2 === 0
+    });
+    return {
+      classNames,
+      val
+    };
+  },
+  template: "\r\n  classNames is {{ classNames }}\r\n  <br />\r\n  <br />\r\n  <input v-model=\"val\" />\r\n"
+};
+ vueComponents.example4=example4;
+
+const example5 = {
   setup() {
     const {
       useData
@@ -233,7 +256,6 @@ const example4 = {
         order
       }];
     };
-    console.log(page);
     return {
       loading,
       items,
@@ -252,9 +274,9 @@ const example4 = {
       changeSort
     };
   },
-  template: "\r\n  <div v-if=\"loading\">\u67E5\u8BE2\u4E2D...\r\n  </div>\r\n  <ul v-if=\"!loading\">\r\n    <li v-for=\"item in items\">{{ item }}</li>\r\n    <div>\r\n      <span class=\"mr15\">\u5F53\u524D\u9875\u9762:{{ `${page}/${pageCount}` }}</span>\r\n      <span class=\"mr15\">\u6BCF\u9875\u884C\u6570:{{ pageSize }}</span>\r\n      <span>\u603B\u67E5\u8BE2\u6570\u636E\u91CF:{{ total }}</span>\r\n    </div>\r\n    <div>\r\n      <button class=\"mr15\" @click=\"onFirst\" :disabled=\"isFirstPage\">\u7B2C\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onPre\" :disabled=\"isFirstPage\">\u4E0A\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onSkipPage(3)\">\u8DF3\u8F6C\u5230\u7B2C\u4E09\u9875</button>\r\n      <button class=\"mr15\" @click=\"onNext\" :disabled=\"isLastPage\">\u4E0B\u4E00\u9875</button>\r\n      <button class=\"mr15\" @click=\"onLast\" :disabled=\"isLastPage\">\u6700\u4E00\u9875</button>\r\n\r\n      <button class=\"mr15\" @click=\"pageSize = 10\" :disabled=\"isLastPage\" v-if=\"pageSize === 5\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A10\u884C</button>\r\n      <button class=\"mr15\" @click=\"pageSize = 5\" :disabled=\"isLastPage\" v-if=\"pageSize === 10\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A5\u884C</button>\r\n\r\n      <button @click=\"changeSort\">\u53CD\u8F6C</button>\r\n    </div>\r\n  </ul>\r\n"
+  template: "\n  <div v-if=\"loading\">\u67E5\u8BE2\u4E2D...\n  </div>\n  <ul v-if=\"!loading\">\n    <li v-for=\"item in items\">{{ item }}</li>\n    <div>\n      <span class=\"mr15\">\u5F53\u524D\u9875\u9762:{{ `${page}/${pageCount}` }}</span>\n      <span class=\"mr15\">\u6BCF\u9875\u884C\u6570:{{ pageSize }}</span>\n      <span>\u603B\u67E5\u8BE2\u6570\u636E\u91CF:{{ total }}</span>\n    </div>\n    <div>\n      <button class=\"mr15\" @click=\"onFirst\" :disabled=\"isFirstPage\">\u7B2C\u4E00\u9875</button>\n      <button class=\"mr15\" @click=\"onPre\" :disabled=\"isFirstPage\">\u4E0A\u4E00\u9875</button>\n      <button class=\"mr15\" @click=\"onSkipPage(3)\">\u8DF3\u8F6C\u5230\u7B2C\u4E09\u9875</button>\n      <button class=\"mr15\" @click=\"onNext\" :disabled=\"isLastPage\">\u4E0B\u4E00\u9875</button>\n      <button class=\"mr15\" @click=\"onLast\" :disabled=\"isLastPage\">\u6700\u4E00\u9875</button>\n\n      <button class=\"mr15\" @click=\"pageSize = 10\" :disabled=\"isLastPage\" v-if=\"pageSize === 5\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A10\u884C</button>\n      <button class=\"mr15\" @click=\"pageSize = 5\" :disabled=\"isLastPage\" v-if=\"pageSize === 10\">\u5207\u6362\u4E3A\u6BCF\u9875\u663E\u793A5\u884C</button>\n\n      <button @click=\"changeSort\">\u53CD\u8F6C</button>\n    </div>\n  </ul>\n"
 };
- vueComponents.example4=example4;
+ vueComponents.example5=example5;
 
     window.$docsify = {
       name: 'zq-vue-hook',

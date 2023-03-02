@@ -112,7 +112,6 @@ export default {
       }]
     }
 
-    console.log(page)
     return {
       loading,
       items,
@@ -136,5 +135,5 @@ export default {
 ```
 
 <output data-lang="output">
-<example4/>
+<example5/>
 </output>
